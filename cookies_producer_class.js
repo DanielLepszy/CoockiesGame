@@ -46,4 +46,44 @@ var addCoockieOnClick = function () {
     globalProduction.CurrentAmountOfCookies = parseFloat(placeForAllCockies.textContent);
     globalProduction.CurrentAmountOfCookies = globalProduction.CurrentAmountOfCookies + 1;
     placeForAllCockies.innerHTML = globalProduction.CurrentAmountOfCookies.toString();
+    possibilityToBuyProducer();
+    imossibilityToBuyProducer();
+};
+var possibilityToBuyProducer = function () {
+    var AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
+    var singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img");
+    if (AmountOfAllCookies >= 10) {
+        singleImageProducer[0].style.filter = "brightness(100%)";
+    }
+    else if (AmountOfAllCookies >= 100) {
+        singleImageProducer[1].style.filter = "brightness(100%)";
+    }
+    else if (AmountOfAllCookies >= 1000) {
+        singleImageProducer[2].style.filter = "brightness(100%)";
+    }
+    else if (AmountOfAllCookies >= 10000) {
+        singleImageProducer[3].style.filter = "brightness(100%)";
+    }
+    else if (AmountOfAllCookies >= 100000) {
+        singleImageProducer[4].style.filter = "brightness(100%)";
+    }
+};
+var imossibilityToBuyProducer = function () {
+    var AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
+    var singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img");
+    if (AmountOfAllCookies < 10) {
+        singleImageProducer[0].style.filter = "brightness(15%)";
+    }
+    else if (AmountOfAllCookies < 100) {
+        singleImageProducer[1].style.filter = "brightness(15%)";
+    }
+    else if (AmountOfAllCookies < 1000) {
+        singleImageProducer[2].style.filter = "brightness(15%)";
+    }
+    else if (AmountOfAllCookies < 10000) {
+        singleImageProducer[3].style.filter = "brightness(15%)";
+    }
+    else if (AmountOfAllCookies < 100000) {
+        singleImageProducer[4].style.filter = "brightness(15%)";
+    }
 };
