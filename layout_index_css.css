@@ -1,22 +1,22 @@
-/* .container-fluid
-{
-    border: 2px solid black;
-} */
-div[class*="row"]
-{
+div[class*="row"] {
     border-top: 5px solid rgb(145, 92, 13);
     padding: 20px;
 }
-div[class*="row"]:nth-child(3) img
- {
+
+div[class*="row"]:nth-child(3) img {
     margin: 15px 20px 10px 20px;
-    border: 1px solid black;
-    position: relative;
+    filter: brightness(15%)
 }
-div[class*="row"]:nth-child(3) p
-{
+div[class*="row"]:nth-child(3) img:hover {
+    display: block;
+  
+}
+div[class*="row"]:nth-child(3) p {
     text-align: center;
+    font-size: 20px;
+    font-weight: bold;
 }
+
 img[alt*="Coockie"] {
     transition: 0.3s;
 }
@@ -30,41 +30,14 @@ img[alt*="Coockie"]:hover {
     cursor: pointer;
     filter: brightness(105%);
 }
-div[class*="row"]:nth-child(4){
-  
+
+div[class*="row"]:nth-child(4) {
     background: none repeat scroll 0 0 #F8F8F8;
     border-top: 5px solid rgb(145, 92, 13);
-    
 }
-span p
-{
+
+span p {
     font-size: 25px;
     /* visibility:hidden; */
 }
-/* span p{
-   
-    font-size: 5px;
-} */
-/* span:after{
-    content:'';
-    position:absolute;
-    bottom:-10px;
-    width:10px;
-    height:10px;
-    border-bottom:5px solid #dfdfdf;
-    border-right:5px solid #dfdfdf;
-    background:#f8f8f8;
-    left:50%;
-    margin-left:-5px;
-    -moz-transform:rotate(45deg);
-    -webkit-transform:rotate(45deg);
-    transform:rotate(45deg);
-   
-} */
-div[class*="row"]:nth-child(3) img:hover
 
-{
-    border: 3px solid red;
-    display:block;
-   
-}
