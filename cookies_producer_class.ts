@@ -4,7 +4,7 @@ abstract class ProductionOfCoockiesByProducer {
 }
 class Producer extends ProductionOfCoockiesByProducer {
     private NameOfProducer: string;
-    private AmountOfPurchasedProducers:number;
+    public AmountOfPurchasedProducers=0;
     public WholeProductionOfCoockiesByAllProducer:number;
 
     
@@ -29,7 +29,7 @@ class GlobalProductionOfCoockies
     public GlobalProductionPerSecond:number;
 }
 
-let cursor = new Producer("Cursor",1,100)
+let cursor = new Producer("Cursor",1,10)
 let grandma = new Producer("Grandma",3,300)
 let farm = new Producer("Cursor",10,1000)
 
@@ -44,11 +44,42 @@ let globalProduction = new GlobalProductionOfCoockies();
 const addCoockieOnClick = () =>
 {
     globalProduction.CurrentAmountOfCookies = parseFloat(placeForAllCockies.textContent);
-    globalProduction.CurrentAmountOfCookies = globalProduction.CurrentAmountOfCookies+1;
+    globalProduction.CurrentAmountOfCookies++;
     placeForAllCockies.innerHTML=globalProduction.CurrentAmountOfCookies.toString();
-    possibilityToBuyProducer();
-    imossibilityToBuyProducer();
+    ifProducerIsAvaibilityToBuy();
 }
+
+const purchaseCursorProducer = () =>
+{
+    if(globalProduction.CurrentAmountOfCookies>=10)
+    {
+        let placeForAmountOfCursor = document.getElementById("producersOfCookies").getElementsByTagName("div")[0].getElementsByTagName("p")[1]
+        
+        cursor.AmountOfPurchasedProducers++
+        placeForAmountOfCursor.innerHTML = cursor.AmountOfPurchasedProducers.toString()
+        globalProduction.CurrentAmountOfCookies-=10;
+        placeForAllCockies.innerHTML=globalProduction.CurrentAmountOfCookies.toString();
+        ifProducerIsAvaibilityToBuy();
+    }
+}
+const cursorProductionPerSecond = (place) =>
+{
+    globalProduction.CurrentAmountOfCookies += (cursor.AmountOfPurchasedProducers*cursor.CoockiesPerSecond)
+    place.textContent +=globalProduction.CurrentAmountOfCookies.toString();
+}
+const productionOfEachProducerPerSecond = () =>
+{
+    let placeForCursorProductionPerSecond = document.getElementById("producerInfo").getElementsByTagName("p")[3]
+    setInterval(
+        cursorProductionPerSecond(placeForCursorProductionPerSecond), 1000);
+}
+
+const ifProducerIsAvaibilityToBuy = () =>
+{
+    possibilityToBuyProducer();
+    impossibilityToBuyProducer();
+}
+
 const possibilityToBuyProducer = () =>
 {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
@@ -56,48 +87,58 @@ const possibilityToBuyProducer = () =>
     if(AmountOfAllCookies>=10)
     {
         singleImageProducer[0].style.filter ="brightness(100%)"
+        singleImageProducer[0].style.cursor="pointer"
     }
     else if(AmountOfAllCookies>=100)
     {
         singleImageProducer[1].style.filter ="brightness(100%)"
+        singleImageProducer[0].style.cursor="pointer"
     }
     else if(AmountOfAllCookies>=1000)
     {
         singleImageProducer[2].style.filter ="brightness(100%)"
+        singleImageProducer[0].style.cursor="pointer"
     }
     else if(AmountOfAllCookies>=10000)
     {
         singleImageProducer[3].style.filter ="brightness(100%)"
+        singleImageProducer[0].style.cursor="pointer"
     }
     else if(AmountOfAllCookies>=100000)
     {
         singleImageProducer[4].style.filter ="brightness(100%)"
+        singleImageProducer[0].style.cursor="pointer"
     }
 
 }
-const imossibilityToBuyProducer = () =>
+const impossibilityToBuyProducer = () =>
 {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
     if(AmountOfAllCookies<10)
     {
         singleImageProducer[0].style.filter ="brightness(15%)"
+        singleImageProducer[0].style.cursor="context-menu"
     }
     else if(AmountOfAllCookies<100)
     {
         singleImageProducer[1].style.filter ="brightness(15%)"
+        singleImageProducer[0].style.cursor="context-menu"
     }
     else if(AmountOfAllCookies<1000)
     {
         singleImageProducer[2].style.filter ="brightness(15%)"
+        singleImageProducer[0].style.cursor="context-menu"
     }
     else if(AmountOfAllCookies<10000)
     {
         singleImageProducer[3].style.filter ="brightness(15%)"
+        singleImageProducer[0].style.cursor="context-menu"
     }
     else if(AmountOfAllCookies<100000)
     {
         singleImageProducer[4].style.filter ="brightness(15%)"
+        singleImageProducer[0].style.cursor="context-menu"
     }
 
 }

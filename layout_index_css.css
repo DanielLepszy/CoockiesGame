@@ -7,10 +7,9 @@ div[class*="row"]:nth-child(3) img {
     margin: 15px 20px 10px 20px;
     filter: brightness(15%)
 }
-div[class*="row"]:nth-child(3) img:hover {
-    display: block;
+/* div[class*="row"]:nth-child(3) img:hover {
   
-}
+} */
 div[class*="row"]:nth-child(3) p {
     text-align: center;
     font-size: 20px;
@@ -38,6 +37,5 @@ div[class*="row"]:nth-child(4) {
 
 span p {
     font-size: 25px;
-    /* visibility:hidden; */
 }
 
