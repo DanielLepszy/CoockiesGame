@@ -59,13 +59,35 @@ var purchaseCursorProducer = function () {
         ifProducerIsAvaibilityToBuy();
     }
 };
-var cursorProductionPerSecond = function (place) {
-    globalProduction.CurrentAmountOfCookies += (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
-    place.textContent += globalProduction.CurrentAmountOfCookies.toString();
+var producerInfoArray = function () {
+    var producerInformationArray;
+    var placeForNameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0];
+    var placeForProductionOfCursor = document.getElementById("producerInfo").getElementsByTagName("p")[1];
+    var placeForProductionOfAllCursors = document.getElementById("producerInfo").getElementsByTagName("p")[2];
+    var placeForAmountOfAllCursors = document.getElementById("producerInfo").getElementsByTagName("p")[3];
+    producerInformationArray = [placeForNameOfProducer, placeForProductionOfCursor, placeForProductionOfAllCursors, placeForAmountOfAllCursors];
+    return producerInformationArray;
+};
+var cursorProductionPerSecond = function () {
+    var producerInformationArray = producerInfoArray();
+    var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    globalProduction.CurrentAmountOfCookies += productionOfAllCursor;
+    console.log(globalProduction.CurrentAmountOfCookies);
+    producerInformationArray[0] = cursor.NameOfProducer;
+    producerInformationArray[1] = cursor.CoockiesPerSecond.toString();
+    producerInformationArray[2].textContent = productionOfAllCursor.toString();
+    producerInformationArray[3] = cursor.AmountOfPurchasedProducers.toString();
+};
+var showCursorInfo = function () {
+    var producerInformationArray = producerInfoArray();
+    var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    producerInformationArray[0].innerHTML = cursor.NameOfProducer;
+    producerInformationArray[1].innerHTML = "Each " + cursor.NameOfProducer + " produce: " + cursor.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor;
+    producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString();
 };
 var productionOfEachProducerPerSecond = function () {
-    var placeForCursorProductionPerSecond = document.getElementById("producerInfo").getElementsByTagName("p")[3];
-    setInterval(cursorProductionPerSecond(placeForCursorProductionPerSecond), 1000);
+    setInterval(cursorProductionPerSecond, 1000);
 };
 var ifProducerIsAvaibilityToBuy = function () {
     possibilityToBuyProducer();
@@ -80,19 +102,19 @@ var possibilityToBuyProducer = function () {
     }
     else if (AmountOfAllCookies >= 100) {
         singleImageProducer[1].style.filter = "brightness(100%)";
-        singleImageProducer[0].style.cursor = "pointer";
+        singleImageProducer[1].style.cursor = "pointer";
     }
     else if (AmountOfAllCookies >= 1000) {
         singleImageProducer[2].style.filter = "brightness(100%)";
-        singleImageProducer[0].style.cursor = "pointer";
+        singleImageProducer[2].style.cursor = "pointer";
     }
     else if (AmountOfAllCookies >= 10000) {
         singleImageProducer[3].style.filter = "brightness(100%)";
-        singleImageProducer[0].style.cursor = "pointer";
+        singleImageProducer[3].style.cursor = "pointer";
     }
     else if (AmountOfAllCookies >= 100000) {
         singleImageProducer[4].style.filter = "brightness(100%)";
-        singleImageProducer[0].style.cursor = "pointer";
+        singleImageProducer[4].style.cursor = "pointer";
     }
 };
 var impossibilityToBuyProducer = function () {
@@ -104,18 +126,18 @@ var impossibilityToBuyProducer = function () {
     }
     else if (AmountOfAllCookies < 100) {
         singleImageProducer[1].style.filter = "brightness(15%)";
-        singleImageProducer[0].style.cursor = "context-menu";
+        singleImageProducer[1].style.cursor = "context-menu";
     }
     else if (AmountOfAllCookies < 1000) {
         singleImageProducer[2].style.filter = "brightness(15%)";
-        singleImageProducer[0].style.cursor = "context-menu";
+        singleImageProducer[2].style.cursor = "context-menu";
     }
     else if (AmountOfAllCookies < 10000) {
         singleImageProducer[3].style.filter = "brightness(15%)";
-        singleImageProducer[0].style.cursor = "context-menu";
+        singleImageProducer[3].style.cursor = "context-menu";
     }
     else if (AmountOfAllCookies < 100000) {
         singleImageProducer[4].style.filter = "brightness(15%)";
-        singleImageProducer[0].style.cursor = "context-menu";
+        singleImageProducer[4].style.cursor = "context-menu";
     }
 };
