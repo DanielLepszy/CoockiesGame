@@ -25,27 +25,21 @@ class Producer extends ProductionOfCoockiesByProducer {
 }
 class GlobalProductionOfCoockies
 {
-    public CurrentAmountOfCookies=0;
-    public GlobalProductionPerSecond:number;
+    public CurrentAmountOfCookies:number=0;
+    public GlobalProductionPerSecond:number=0;
 }
 
 let cursor = new Producer("Cursor",1,10)
 let grandma = new Producer("Grandma",3,300)
 let farm = new Producer("Cursor",10,1000)
 
-
-let NameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0]
-
-let placeForAllCockies = document.getElementById("globalProduction").getElementsByTagName("p")[0]
-let placeForGlobalProductionPerSecond = document.getElementById("globalProduction").getElementsByTagName("p")[3]
-
 let globalProduction = new GlobalProductionOfCoockies();
 
 const addCoockieOnClick = ():void =>
 {
-    globalProduction.CurrentAmountOfCookies = parseFloat(placeForAllCockies.textContent);
+    
     globalProduction.CurrentAmountOfCookies++;
-    placeForAllCockies.innerHTML=globalProduction.CurrentAmountOfCookies.toString();
+    showGlobalProduction();
     ifProducerIsAvaibilityToBuy();
 }
 
@@ -58,7 +52,6 @@ const purchaseCursorProducer = ():void =>
         cursor.AmountOfPurchasedProducers++
         placeForAmountOfCursor.innerHTML = cursor.AmountOfPurchasedProducers.toString()
         globalProduction.CurrentAmountOfCookies-=10;
-        placeForAllCockies.innerHTML=globalProduction.CurrentAmountOfCookies.toString();
         ifProducerIsAvaibilityToBuy();
     }
 }
@@ -74,20 +67,32 @@ const producerInfoArray = ():Array<any> =>
     producerInformationArray=[placeForNameOfProducer,placeForProductionOfCursor,placeForProductionOfAllCursors,placeForAmountOfAllCursors]
     return producerInformationArray
 }
-const cursorProductionPerSecond = () =>
+const showGlobalProduction =() =>
 {
-    let producerInformationArray = producerInfoArray();
-    let productionOfAllCursor = (cursor.AmountOfPurchasedProducers*cursor.CoockiesPerSecond)
-    
-
-    globalProduction.CurrentAmountOfCookies += productionOfAllCursor
-    console.log(globalProduction.CurrentAmountOfCookies)
-
-    producerInformationArray[0]=cursor.NameOfProducer
-    producerInformationArray[1]=cursor.CoockiesPerSecond.toString();
-    producerInformationArray[2].textContent = productionOfAllCursor.toString();
-    producerInformationArray[3]=cursor.AmountOfPurchasedProducers.toString();
+    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
+    document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
 }
+const cursorProductionPerSecond = ():void =>
+{
+    let productionOfAllCursor = (cursor.AmountOfPurchasedProducers*cursor.CoockiesPerSecond)
+    globalProduction.CurrentAmountOfCookies += productionOfAllCursor
+    showGlobalProduction();
+    ifProducerIsAvaibilityToBuy();
+}
+
+
+const productionOfEachProducerPerSecond = () =>
+{
+    setInterval(cursorProductionPerSecond, 1000);
+}
+
+
+
+
+
+
+
+
 const showCursorInfo =():void =>
 {
     let producerInformationArray = producerInfoArray();
@@ -99,11 +104,6 @@ const showCursorInfo =():void =>
     producerInformationArray[3].innerHTML ="Amount producer: "+cursor.AmountOfPurchasedProducers.toString();
 
 }
-const productionOfEachProducerPerSecond = () =>
-{
-    setInterval(cursorProductionPerSecond, 1000);
-}
-
 const ifProducerIsAvaibilityToBuy = ():void =>
 {
     possibilityToBuyProducer();

@@ -33,20 +33,17 @@ var Producer = /** @class */ (function (_super) {
 var GlobalProductionOfCoockies = /** @class */ (function () {
     function GlobalProductionOfCoockies() {
         this.CurrentAmountOfCookies = 0;
+        this.GlobalProductionPerSecond = 0;
     }
     return GlobalProductionOfCoockies;
 }());
 var cursor = new Producer("Cursor", 1, 10);
 var grandma = new Producer("Grandma", 3, 300);
 var farm = new Producer("Cursor", 10, 1000);
-var NameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0];
-var placeForAllCockies = document.getElementById("globalProduction").getElementsByTagName("p")[0];
-var placeForGlobalProductionPerSecond = document.getElementById("globalProduction").getElementsByTagName("p")[3];
 var globalProduction = new GlobalProductionOfCoockies();
 var addCoockieOnClick = function () {
-    globalProduction.CurrentAmountOfCookies = parseFloat(placeForAllCockies.textContent);
     globalProduction.CurrentAmountOfCookies++;
-    placeForAllCockies.innerHTML = globalProduction.CurrentAmountOfCookies.toString();
+    showGlobalProduction();
     ifProducerIsAvaibilityToBuy();
 };
 var purchaseCursorProducer = function () {
@@ -55,7 +52,6 @@ var purchaseCursorProducer = function () {
         cursor.AmountOfPurchasedProducers++;
         placeForAmountOfCursor.innerHTML = cursor.AmountOfPurchasedProducers.toString();
         globalProduction.CurrentAmountOfCookies -= 10;
-        placeForAllCockies.innerHTML = globalProduction.CurrentAmountOfCookies.toString();
         ifProducerIsAvaibilityToBuy();
     }
 };
@@ -68,15 +64,18 @@ var producerInfoArray = function () {
     producerInformationArray = [placeForNameOfProducer, placeForProductionOfCursor, placeForProductionOfAllCursors, placeForAmountOfAllCursors];
     return producerInformationArray;
 };
+var showGlobalProduction = function () {
+    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString();
+    document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString();
+};
 var cursorProductionPerSecond = function () {
-    var producerInformationArray = producerInfoArray();
     var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
     globalProduction.CurrentAmountOfCookies += productionOfAllCursor;
-    console.log(globalProduction.CurrentAmountOfCookies);
-    producerInformationArray[0] = cursor.NameOfProducer;
-    producerInformationArray[1] = cursor.CoockiesPerSecond.toString();
-    producerInformationArray[2].textContent = productionOfAllCursor.toString();
-    producerInformationArray[3] = cursor.AmountOfPurchasedProducers.toString();
+    showGlobalProduction();
+    ifProducerIsAvaibilityToBuy();
+};
+var productionOfEachProducerPerSecond = function () {
+    setInterval(cursorProductionPerSecond, 1000);
 };
 var showCursorInfo = function () {
     var producerInformationArray = producerInfoArray();
@@ -85,9 +84,6 @@ var showCursorInfo = function () {
     producerInformationArray[1].innerHTML = "Each " + cursor.NameOfProducer + " produce: " + cursor.CoockiesPerSecond.toString() + " cookies per sec";
     producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor;
     producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString();
-};
-var productionOfEachProducerPerSecond = function () {
-    setInterval(cursorProductionPerSecond, 1000);
 };
 var ifProducerIsAvaibilityToBuy = function () {
     possibilityToBuyProducer();
