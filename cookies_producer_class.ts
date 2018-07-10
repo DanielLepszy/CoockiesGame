@@ -1,3 +1,4 @@
+
 abstract class ProductionOfCoockiesByProducer {
      CoockiesPerSecond: number;
      CostOfSingleProducer: number;
@@ -25,8 +26,8 @@ class Producer extends ProductionOfCoockiesByProducer {
 }
 class GlobalProductionOfCoockies
 {
-    public CurrentAmountOfCookies:number=0;
-    public GlobalProductionPerSecond:number=0;
+    public CurrentAmountOfCookies:number=0
+    public GlobalProductionPerSecond:number=0
 }
 
 let cursor = new Producer("Cursor",1,10)
@@ -53,6 +54,7 @@ const purchaseCursorProducer = ():void =>
         placeForAmountOfCursor.innerHTML = cursor.AmountOfPurchasedProducers.toString()
         globalProduction.CurrentAmountOfCookies-=10;
         ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecond();
     }
 }
 const producerInfoArray = ():Array<any> =>
@@ -67,9 +69,15 @@ const producerInfoArray = ():Array<any> =>
     producerInformationArray=[placeForNameOfProducer,placeForProductionOfCursor,placeForProductionOfAllCursors,placeForAmountOfAllCursors]
     return producerInformationArray
 }
-const showGlobalProduction =() =>
+const showGlobalProduction =():void =>
 {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
+   // document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
+
+}
+const showGlobalProductionPerSecond = ():void =>
+{
+    globalProduction.GlobalProductionPerSecond=(cursor.AmountOfPurchasedProducers*cursor.CoockiesPerSecond)
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
 }
 const cursorProductionPerSecond = ():void =>
@@ -87,12 +95,6 @@ const productionOfEachProducerPerSecond = () =>
 }
 
 
-
-
-
-
-
-
 const showCursorInfo =():void =>
 {
     let producerInformationArray = producerInfoArray();
@@ -100,7 +102,7 @@ const showCursorInfo =():void =>
 
     producerInformationArray[0].innerHTML =cursor.NameOfProducer
     producerInformationArray[1].innerHTML ="Each "+ cursor.NameOfProducer+" produce: "+cursor.CoockiesPerSecond.toString()+" cookies per sec";
-    producerInformationArray[2].innerHTML = productionOfAllCursor.toString()+" Cursors produce "+ productionOfAllCursor;
+    producerInformationArray[2].innerHTML = productionOfAllCursor.toString()+" Cursors produce "+ productionOfAllCursor+" cookies per second";
     producerInformationArray[3].innerHTML ="Amount producer: "+cursor.AmountOfPurchasedProducers.toString();
 
 }
@@ -141,7 +143,8 @@ const possibilityToBuyProducer = ():void =>
     }
 
 }
-const impossibilityToBuyProducer = ():void  =>
+
+const impossibilityToBuyProducer = ()  =>
 {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
@@ -172,3 +175,5 @@ const impossibilityToBuyProducer = ():void  =>
     }
 
 }
+
+

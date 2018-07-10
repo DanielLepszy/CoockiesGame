@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -8,6 +9,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+exports.__esModule = true;
 var ProductionOfCoockiesByProducer = /** @class */ (function () {
     function ProductionOfCoockiesByProducer() {
     }
@@ -53,6 +55,7 @@ var purchaseCursorProducer = function () {
         placeForAmountOfCursor.innerHTML = cursor.AmountOfPurchasedProducers.toString();
         globalProduction.CurrentAmountOfCookies -= 10;
         ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecond();
     }
 };
 var producerInfoArray = function () {
@@ -66,6 +69,10 @@ var producerInfoArray = function () {
 };
 var showGlobalProduction = function () {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString();
+    // document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
+};
+var showGlobalProductionPerSecond = function () {
+    globalProduction.GlobalProductionPerSecond = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString();
 };
 var cursorProductionPerSecond = function () {
@@ -82,7 +89,7 @@ var showCursorInfo = function () {
     var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
     producerInformationArray[0].innerHTML = cursor.NameOfProducer;
     producerInformationArray[1].innerHTML = "Each " + cursor.NameOfProducer + " produce: " + cursor.CoockiesPerSecond.toString() + " cookies per sec";
-    producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor;
+    producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString();
 };
 var ifProducerIsAvaibilityToBuy = function () {
