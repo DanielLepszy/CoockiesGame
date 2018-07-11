@@ -113,7 +113,9 @@ const getReferencesToParagraph = (): Array<any> => {
 const showGlobalProductionOnTopPage = (): void => {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
 }
-const globalProductionPerSecondByAllProducers = ():number => {
+const globalProductionPerSecondByAllProducers = (): Array<number> => {
+
+    let globalProductionPerSec: Array<number>
 
     let cursorsProductionPerSec = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
     let grandmasProductionPerSec = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
@@ -122,36 +124,48 @@ const globalProductionPerSecondByAllProducers = ():number => {
     let rocketsProductionPerSec = (rocket.AmountOfPurchasedProducers * rocket.CoockiesPerSecond)
     let planetsProductionPerSec = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond)
 
-    let globalProductionPerSec =
-        (
-            cursorsProductionPerSec +
-            grandmasProductionPerSec +
-            farmsProductionPerSec +
-            factoriesProductionPerSec +
-            rocketsProductionPerSec +
+    globalProductionPerSec =
+        [
+            cursorsProductionPerSec,
+            grandmasProductionPerSec,
+            farmsProductionPerSec,
+            factoriesProductionPerSec,
+            rocketsProductionPerSec,
             planetsProductionPerSec
-        )
-        return globalProductionPerSec
+        ]
+    return globalProductionPerSec
+}
+const sumProductionPerSecondAllProducers = (): number => {
+    let sum = globalProductionPerSecondByAllProducers().reduce((a, b) => a + b, 0)
+    return sum
 }
 const showGlobalProductionPerSecondOnTopPage = (): void => {
-    globalProduction.GlobalProductionPerSecond = globalProductionPerSecondByAllProducers()
+
+    globalProduction.GlobalProductionPerSecond = sumProductionPerSecondAllProducers()
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
 }
 const cursorProductionPerSecond = (): void => {
-    let productioPerSecondnOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    let productioPerSecondnOfAllCursor = globalProductionPerSecondByAllProducers()[0]
     globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllCursor
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
 const grandmaProductionPerSecond = (): void => {
-    let productioPerSecondnOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
+    let productioPerSecondnOfAllGrandmas = globalProductionPerSecondByAllProducers()[1]
     globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllGrandmas
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
 
-const productionOfEachProducerPerSecond = (): void => {
-    setInterval(cursorProductionPerSecond, 1000);
+const getProductionOfEachProducerPerSecond =():void =>
+{
+    cursorProductionPerSecond()
+    grandmaProductionPerSecond()
+
+}
+
+const refreshToShowNewProduction = (): void => {
+    setInterval(getProductionOfEachProducerPerSecond, 1000);
 }
 const getCurrentProductionPerSecondOfProducer = (): Array<number> => {
     let producersProductionPerSecond: Array<number>
