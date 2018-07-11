@@ -40,22 +40,34 @@ var GlobalProductionOfCoockies = /** @class */ (function () {
     return GlobalProductionOfCoockies;
 }());
 var cursor = new Producer("Cursor", 1, 10);
-var grandma = new Producer("Grandma", 3, 300);
-var farm = new Producer("Cursor", 10, 1000);
-var factory = new Producer("Factory", 40, 2000);
-var rocket = new Producer("Rocket", 75, 4000);
-var planet = new Producer("Planet", 100, 6000);
+var grandma = new Producer("Grandma", 3, 30);
+var farm = new Producer("Cursor", 10, 31);
+var factory = new Producer("Factory", 40, 32);
+var rocket = new Producer("Rocket", 75, 33);
+var planet = new Producer("Planet", 100, 34);
 var globalProduction = new GlobalProductionOfCoockies();
 var addCoockieOnClick = function () {
     globalProduction.CurrentAmountOfCookies++;
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 };
+var purchaseProducer = function () {
+};
 var purchaseCursorProducer = function () {
     var costOfCursor = currentCostOfProducer()[0];
     if (globalProduction.CurrentAmountOfCookies >= costOfCursor) {
         cursor.AmountOfPurchasedProducers++;
         globalProduction.CurrentAmountOfCookies -= costOfCursor;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+};
+var purchaseGrandmaProducer = function () {
+    var costOfGrandma = currentCostOfProducer()[1];
+    if (globalProduction.CurrentAmountOfCookies >= costOfGrandma) {
+        grandma.AmountOfPurchasedProducers++;
+        globalProduction.CurrentAmountOfCookies -= costOfGrandma;
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
@@ -98,13 +110,34 @@ var getReferencesToParagraph = function () {
 var showGlobalProductionOnTopPage = function () {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString();
 };
+var globalProductionPerSecondByAllProducers = function () {
+    var cursorsProductionPerSec = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    var grandmasProductionPerSec = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond);
+    var farmsProductionPerSec = (farm.AmountOfPurchasedProducers * farm.CoockiesPerSecond);
+    var factoriesProductionPerSec = (factory.AmountOfPurchasedProducers * factory.CoockiesPerSecond);
+    var rocketsProductionPerSec = (rocket.AmountOfPurchasedProducers * rocket.CoockiesPerSecond);
+    var planetsProductionPerSec = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond);
+    var globalProductionPerSec = (cursorsProductionPerSec +
+        grandmasProductionPerSec +
+        farmsProductionPerSec +
+        factoriesProductionPerSec +
+        rocketsProductionPerSec +
+        planetsProductionPerSec);
+    return globalProductionPerSec;
+};
 var showGlobalProductionPerSecondOnTopPage = function () {
-    globalProduction.GlobalProductionPerSecond = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    globalProduction.GlobalProductionPerSecond = globalProductionPerSecondByAllProducers();
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString();
 };
 var cursorProductionPerSecond = function () {
     var productioPerSecondnOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
     globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllCursor;
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+};
+var grandmaProductionPerSecond = function () {
+    var productioPerSecondnOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond);
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllGrandmas;
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 };

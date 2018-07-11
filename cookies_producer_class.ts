@@ -5,7 +5,7 @@ abstract class ProductionOfCoockiesByProducer {
 }
 class Producer extends ProductionOfCoockiesByProducer {
     public NameOfProducer: string;
-    public AmountOfPurchasedProducers = 0;
+    public AmountOfPurchasedProducers: number = 0;
     public WholeProductionOfCoockiesByAllProducer: number;
 
 
@@ -29,11 +29,11 @@ class GlobalProductionOfCoockies {
 }
 
 let cursor = new Producer("Cursor", 1, 10)
-let grandma = new Producer("Grandma", 3, 300)
-let farm = new Producer("Cursor", 10, 1000)
-let factory = new Producer("Factory", 40, 2000)
-let rocket = new Producer("Rocket", 75, 4000)
-let planet = new Producer("Planet", 100, 6000)
+let grandma = new Producer("Grandma", 3, 30)
+let farm = new Producer("Cursor", 10, 31)
+let factory = new Producer("Factory", 40, 32)
+let rocket = new Producer("Rocket", 75, 33)
+let planet = new Producer("Planet", 100, 34)
 
 let globalProduction = new GlobalProductionOfCoockies();
 
@@ -42,14 +42,29 @@ const addCoockieOnClick = (): void => {
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
+const purchaseProducer = (): void => {
 
+}
 const purchaseCursorProducer = (): void => {
 
     let costOfCursor = currentCostOfProducer()[0];
-    
+
     if (globalProduction.CurrentAmountOfCookies >= costOfCursor) {
         cursor.AmountOfPurchasedProducers++
         globalProduction.CurrentAmountOfCookies -= costOfCursor;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+}
+
+const purchaseGrandmaProducer = (): void => {
+
+    let costOfGrandma = currentCostOfProducer()[1];
+
+    if (globalProduction.CurrentAmountOfCookies >= costOfGrandma) {
+        grandma.AmountOfPurchasedProducers++
+        globalProduction.CurrentAmountOfCookies -= costOfGrandma;
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
@@ -98,8 +113,28 @@ const getReferencesToParagraph = (): Array<any> => {
 const showGlobalProductionOnTopPage = (): void => {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
 }
+const globalProductionPerSecondByAllProducers = ():number => {
+
+    let cursorsProductionPerSec = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    let grandmasProductionPerSec = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
+    let farmsProductionPerSec = (farm.AmountOfPurchasedProducers * farm.CoockiesPerSecond)
+    let factoriesProductionPerSec = (factory.AmountOfPurchasedProducers * factory.CoockiesPerSecond)
+    let rocketsProductionPerSec = (rocket.AmountOfPurchasedProducers * rocket.CoockiesPerSecond)
+    let planetsProductionPerSec = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond)
+
+    let globalProductionPerSec =
+        (
+            cursorsProductionPerSec +
+            grandmasProductionPerSec +
+            farmsProductionPerSec +
+            factoriesProductionPerSec +
+            rocketsProductionPerSec +
+            planetsProductionPerSec
+        )
+        return globalProductionPerSec
+}
 const showGlobalProductionPerSecondOnTopPage = (): void => {
-    globalProduction.GlobalProductionPerSecond = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    globalProduction.GlobalProductionPerSecond = globalProductionPerSecondByAllProducers()
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
 }
 const cursorProductionPerSecond = (): void => {
@@ -108,14 +143,18 @@ const cursorProductionPerSecond = (): void => {
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
-
+const grandmaProductionPerSecond = (): void => {
+    let productioPerSecondnOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllGrandmas
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+}
 
 const productionOfEachProducerPerSecond = (): void => {
     setInterval(cursorProductionPerSecond, 1000);
 }
-const getCurrentProductionPerSecondOfProducer = ():Array<number> =>
-{
-    let producersProductionPerSecond:Array<number>
+const getCurrentProductionPerSecondOfProducer = (): Array<number> => {
+    let producersProductionPerSecond: Array<number>
 
     let productionPerSecondOfAllCursors = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
     let productionPerSecondOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
@@ -125,14 +164,14 @@ const getCurrentProductionPerSecondOfProducer = ():Array<number> =>
     let productionPerSecondOfAllPlanets = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond)
 
     producersProductionPerSecond =
-    [
-        productionPerSecondOfAllCursors,
-        productionPerSecondOfAllGrandmas,
-        productionPerSecondOfAllFarms,
-        productionPerSecondOfAllFactories,
-        productionPerSecondOfAllRockets,
-        productionPerSecondOfAllPlanets
-    ]
+        [
+            productionPerSecondOfAllCursors,
+            productionPerSecondOfAllGrandmas,
+            productionPerSecondOfAllFarms,
+            productionPerSecondOfAllFactories,
+            productionPerSecondOfAllRockets,
+            productionPerSecondOfAllPlanets
+        ]
 
     return producersProductionPerSecond
 }
@@ -188,8 +227,7 @@ const possibilityToBuyProducer = (): void => {
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
     let costOfProducerArray = currentCostOfProducer();
 
-    for(var i:number=0;i<costOfProducerArray.length;i++)
-    {
+    for (var i: number = 0; i < costOfProducerArray.length; i++) {
         if (AmountOfAllCookies >= costOfProducerArray[i]) {
             singleImageProducer[i].style.filter = "brightness(100%)"
             singleImageProducer[i].style.cursor = "pointer"
@@ -200,8 +238,7 @@ const impossibilityToBuyProducer = () => {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
     let costOfProducerArray = currentCostOfProducer();
-    for(var i:number=0;i<costOfProducerArray.length;i++)
-    {
+    for (var i: number = 0; i < costOfProducerArray.length; i++) {
         if (AmountOfAllCookies < costOfProducerArray[i]) {
             singleImageProducer[i].style.filter = "brightness(15%)"
             singleImageProducer[i].style.cursor = "context-menu"
