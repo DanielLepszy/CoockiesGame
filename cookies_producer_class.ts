@@ -30,17 +30,17 @@ class GlobalProductionOfCoockies {
 
 let cursor = new Producer("Cursor", 1, 10)
 let grandma = new Producer("Grandma", 3, 30)
-let farm = new Producer("Cursor", 10, 31)
-let factory = new Producer("Factory", 40, 32)
-let rocket = new Producer("Rocket", 75, 33)
-let planet = new Producer("Planet", 100, 34)
+let farm = new Producer("Cursor", 10, 100)
+let factory = new Producer("Factory", 40, 250)
+let rocket = new Producer("Rocket", 75, 500)
+let planet = new Producer("Planet", 100, 1000)
 
-let globalProduction = new GlobalProductionOfCoockies();
+let globalProduction = new GlobalProductionOfCoockies()
 
 const addCoockieOnClick = (): void => {
     globalProduction.CurrentAmountOfCookies++;
-    showGlobalProductionOnTopPage();
-    ifProducerIsAvaibilityToBuy();
+    showGlobalProductionOnTopPage()
+    ifProducerIsAvaibilityToBuy()
 }
 const purchaseProducer = (): void => {
 
@@ -51,10 +51,11 @@ const purchaseCursorProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfCursor) {
         cursor.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfCursor;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfCursor
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showCursorInfo()
     }
 }
 
@@ -64,10 +65,11 @@ const purchaseGrandmaProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfGrandma) {
         grandma.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfGrandma;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfGrandma
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showGrandmaInfo()
     }
 }
 const purchaseFarmaProducer = (): void => {
@@ -76,10 +78,11 @@ const purchaseFarmaProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfFarm) {
         farm.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfFarm;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfFarm
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showFarmInfo()
     }
 }
 const purchaseFactoryProducer = (): void => {
@@ -88,10 +91,11 @@ const purchaseFactoryProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfFactory) {
         factory.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfFactory;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfFactory
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showFactoryInfo()
     }
 }
 
@@ -101,10 +105,11 @@ const purchaseRocketProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfRocket) {
         rocket.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfRocket;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfRocket
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showRocketInfo()
     }
 }
 const purchasePlanetProducer = (): void => {
@@ -113,10 +118,11 @@ const purchasePlanetProducer = (): void => {
 
     if (globalProduction.CurrentAmountOfCookies >= costOfPlanet) {
         planet.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= costOfPlanet;
-        ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecondOnTopPage();
-        showAmountPurchasedProducers();
+        globalProduction.CurrentAmountOfCookies -= costOfPlanet
+        ifProducerIsAvaibilityToBuy()
+        showGlobalProductionPerSecondOnTopPage()
+        showAmountPurchasedProducers()
+        showPlanetInfo()
     }
 }
 const getReferencesToProducerInfoArray = (): Array<any> => {
@@ -324,6 +330,14 @@ const showPlanetInfo = (): void => {
     producerInformationArray[1].innerHTML = "Each " + planet.NameOfProducer + " produce: " + planet.CoockiesPerSecond.toString() + " cookies per sec";
     producerInformationArray[2].innerHTML = productionOfAllPlanets.toString() + " Planets produce " + productionOfAllPlanets + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + planet.AmountOfPurchasedProducers.toString()
+}
+const cleanProducerInfoOnBottomPage = ():void =>
+{
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    producerInformationArray[0].innerHTML = ""
+    producerInformationArray[1].innerHTML = ""
+    producerInformationArray[2].innerHTML = ""
+    producerInformationArray[3].innerHTML = ""
 }
 const showAmountPurchasedProducers = (): void => {
     let arrayOfReferencesParagraph = getReferencesToParagraph();

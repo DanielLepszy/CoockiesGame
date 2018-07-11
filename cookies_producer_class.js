@@ -41,10 +41,10 @@ var GlobalProductionOfCoockies = /** @class */ (function () {
 }());
 var cursor = new Producer("Cursor", 1, 10);
 var grandma = new Producer("Grandma", 3, 30);
-var farm = new Producer("Cursor", 10, 31);
-var factory = new Producer("Factory", 40, 32);
-var rocket = new Producer("Rocket", 75, 33);
-var planet = new Producer("Planet", 100, 34);
+var farm = new Producer("Cursor", 10, 100);
+var factory = new Producer("Factory", 40, 250);
+var rocket = new Producer("Rocket", 75, 500);
+var planet = new Producer("Planet", 100, 1000);
 var globalProduction = new GlobalProductionOfCoockies();
 var addCoockieOnClick = function () {
     globalProduction.CurrentAmountOfCookies++;
@@ -61,6 +61,7 @@ var purchaseCursorProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showCursorInfo();
     }
 };
 var purchaseGrandmaProducer = function () {
@@ -71,6 +72,7 @@ var purchaseGrandmaProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showGrandmaInfo();
     }
 };
 var purchaseFarmaProducer = function () {
@@ -81,6 +83,7 @@ var purchaseFarmaProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showFarmInfo();
     }
 };
 var purchaseFactoryProducer = function () {
@@ -91,6 +94,7 @@ var purchaseFactoryProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showFactoryInfo();
     }
 };
 var purchaseRocketProducer = function () {
@@ -101,6 +105,7 @@ var purchaseRocketProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showRocketInfo();
     }
 };
 var purchasePlanetProducer = function () {
@@ -111,6 +116,7 @@ var purchasePlanetProducer = function () {
         ifProducerIsAvaibilityToBuy();
         showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
+        showPlanetInfo();
     }
 };
 var getReferencesToProducerInfoArray = function () {
@@ -296,6 +302,13 @@ var showPlanetInfo = function () {
     producerInformationArray[1].innerHTML = "Each " + planet.NameOfProducer + " produce: " + planet.CoockiesPerSecond.toString() + " cookies per sec";
     producerInformationArray[2].innerHTML = productionOfAllPlanets.toString() + " Planets produce " + productionOfAllPlanets + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + planet.AmountOfPurchasedProducers.toString();
+};
+var cleanProducerInfoOnBottomPage = function () {
+    var producerInformationArray = getReferencesToProducerInfoArray();
+    producerInformationArray[0].innerHTML = "";
+    producerInformationArray[1].innerHTML = "";
+    producerInformationArray[2].innerHTML = "";
+    producerInformationArray[3].innerHTML = "";
 };
 var showAmountPurchasedProducers = function () {
     var arrayOfReferencesParagraph = getReferencesToParagraph();

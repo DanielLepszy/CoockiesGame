@@ -13,13 +13,13 @@
 
 <body onload="refreshToShowNewProduction()">
     <div class="container-fluid">
-        <div class="row justify-content-center" id="globalProduction">
+        <div class="row justify-content-center" id="globalProduction" onmouseover="cleanProducerInfoOnBottomPage()">
             <div class="col-sm-offset-12">
                 <h3>Cookies: </h3>
                 <p>per second: </p>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" onmouseover="cleanProducerInfoOnBottomPage()">
             <div class="col-sm-offset-12">
                 <img src="Graphic_Images/Coockie.png" alt="Coockie" onclick="addCoockieOnClick()" />
 
