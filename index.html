@@ -14,7 +14,7 @@
 <body onload="refreshToShowNewProduction()">
     <div class="container-fluid">
         <div class="row justify-content-center" id="globalProduction">
-            <div class="col-sm-offset-12" >
+            <div class="col-sm-offset-12">
                 <h3>Cookies: </h3>
                 <p>per second: </p>
             </div>
@@ -33,27 +33,27 @@
             </div>
             <div class="col-lg-offset-2">
                 <p>Grandma</p>
-                <img src="Graphic_Images/Grandma.png" alt="Grandma" onclick="purchaseGrandmaProducer()"/>
+                <img src="Graphic_Images/Grandma.png" alt="Grandma" onclick="purchaseGrandmaProducer()" onmouseover="showGrandmaInfo()" />
                 <p>0</p>
             </div>
             <div class="col-lg-offset-2">
                 <p>Farms</p>
-                <img src="Graphic_Images/Farms.png" alt="Farms" />
+                <img src="Graphic_Images/Farms.png" alt="Farms" onclick="purchaseFarmaProducer()" onmouseover="showFarmInfo()" />
                 <p>0</p>
             </div>
             <div class="col-lg-offset-2">
                 <p>Factory</p>
-                <img src="Graphic_Images/Factory.png" alt="Factory" />
+                <img src="Graphic_Images/Factory.png" alt="Factory" onmouseover="showFactoryInfo()" />
                 <p>0</p>
             </div>
             <div class="col-lg-offset-2">
                 <p>Rocket</p>
-                <img src="Graphic_Images/Rocket.png" alt="Rocket" />
+                <img src="Graphic_Images/Rocket.png" alt="Rocket" onmouseover="showRocketInfo()" />
                 <p>0</p>
             </div>
             <div class="col-lg-offset-2">
                 <p>Planet</p>
-                <img src="Graphic_Images/Planets.png" alt="Planet" />
+                <img src="Graphic_Images/Planets.png" alt="Planet" onmouseover="showPlanetInfo()" />
                 <p>0</p>
             </div>
         </div>
@@ -71,7 +71,9 @@
     </div>
 
 </body>
-<script>var exports = {};</script> 
+<script>
+    var exports = {};
+</script>
 <script src="cookies_producer_class.js"></script>
 
 </html>

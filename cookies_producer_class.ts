@@ -70,6 +70,18 @@ const purchaseGrandmaProducer = (): void => {
         showAmountPurchasedProducers();
     }
 }
+const purchaseFarmaProducer = (): void => {
+
+    let costOfFarm = currentCostOfProducer()[2];
+
+    if (globalProduction.CurrentAmountOfCookies >= costOfFarm) {
+        farm.AmountOfPurchasedProducers++
+        globalProduction.CurrentAmountOfCookies -= costOfFarm;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+}
 
 const getReferencesToProducerInfoArray = (): Array<any> => {
 
@@ -156,11 +168,17 @@ const grandmaProductionPerSecond = (): void => {
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
+const farmProductionPerSecond = (): void => {
+    let productioPerSecondnOfAllFarms = globalProductionPerSecondByAllProducers()[2]
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllFarms
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+}
 
-const getProductionOfEachProducerPerSecond =():void =>
-{
+const getProductionOfEachProducerPerSecond = (): void => {
     cursorProductionPerSecond()
     grandmaProductionPerSecond()
+    farmProductionPerSecond()
 
 }
 
@@ -199,6 +217,58 @@ const showCursorInfo = (): void => {
     producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString()
 
+}
+const showGrandmaInfo = (): void => {
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllGrandmas = getCurrentProductionPerSecondOfProducer()[1]
+    let currentProducerCost = currentCostOfProducer()[1]
+
+    producerInformationArray[0].innerHTML = "Current cost of " + grandma.NameOfProducer + ": " + currentProducerCost
+    producerInformationArray[1].innerHTML = "Each " + grandma.NameOfProducer + " produce: " + grandma.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllGrandmas.toString() + " Grandmas produce " + productionOfAllGrandmas + " cookies per second";
+    producerInformationArray[3].innerHTML = "Amount producer: " + grandma.AmountOfPurchasedProducers.toString()
+
+}
+const showFarmInfo = (): void => {
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllFarms = getCurrentProductionPerSecondOfProducer()[2]
+    let currentProducerCost = currentCostOfProducer()[2]
+
+    producerInformationArray[0].innerHTML = "Current cost of " + farm.NameOfProducer + ": " + currentProducerCost
+    producerInformationArray[1].innerHTML = "Each " + farm.NameOfProducer + " produce: " + farm.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllFarms.toString() + " Farmss produce " + productionOfAllFarms + " cookies per second";
+    producerInformationArray[3].innerHTML = "Amount producer: " + farm.AmountOfPurchasedProducers.toString()
+
+}
+const showFactoryInfo = (): void => {
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllFactories = getCurrentProductionPerSecondOfProducer()[3]
+    let currentProducerCost = currentCostOfProducer()[3]
+
+    producerInformationArray[0].innerHTML = "Current cost of " + factory.NameOfProducer + ": " + currentProducerCost
+    producerInformationArray[1].innerHTML = "Each " + factory.NameOfProducer + " produce: " + factory.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllFactories.toString() + " Factories produce " + productionOfAllFactories + " cookies per second";
+    producerInformationArray[3].innerHTML = "Amount producer: " + factory.AmountOfPurchasedProducers.toString()
+}
+const showRocketInfo = (): void => {
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllRockets = getCurrentProductionPerSecondOfProducer()[4]
+    let currentProducerCost = currentCostOfProducer()[4]
+
+    producerInformationArray[0].innerHTML = "Current cost of " + rocket.NameOfProducer + ": " + currentProducerCost
+    producerInformationArray[1].innerHTML = "Each " + rocket.NameOfProducer + " produce: " + rocket.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllRockets.toString() + " Rockets produce " + productionOfAllRockets + " cookies per second";
+    producerInformationArray[3].innerHTML = "Amount producer: " + rocket.AmountOfPurchasedProducers.toString()
+}
+const showPlanetInfo = (): void => {
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllPlanets = getCurrentProductionPerSecondOfProducer()[5]
+    let currentProducerCost = currentCostOfProducer()[5]
+
+    producerInformationArray[0].innerHTML = "Current cost of " + planet.NameOfProducer + ": " + currentProducerCost
+    producerInformationArray[1].innerHTML = "Each " + planet.NameOfProducer + " produce: " + planet.CoockiesPerSecond.toString() + " cookies per sec";
+    producerInformationArray[2].innerHTML = productionOfAllPlanets.toString() + " Planets produce " + productionOfAllPlanets + " cookies per second";
+    producerInformationArray[3].innerHTML = "Amount producer: " + planet.AmountOfPurchasedProducers.toString()
 }
 const showAmountPurchasedProducers = (): void => {
     let arrayOfReferencesParagraph = getReferencesToParagraph();
