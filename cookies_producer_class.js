@@ -83,6 +83,36 @@ var purchaseFarmaProducer = function () {
         showAmountPurchasedProducers();
     }
 };
+var purchaseFactoryProducer = function () {
+    var costOfFactory = currentCostOfProducer()[2];
+    if (globalProduction.CurrentAmountOfCookies >= costOfFactory) {
+        factory.AmountOfPurchasedProducers++;
+        globalProduction.CurrentAmountOfCookies -= costOfFactory;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+};
+var purchaseRocketProducer = function () {
+    var costOfRocket = currentCostOfProducer()[2];
+    if (globalProduction.CurrentAmountOfCookies >= costOfRocket) {
+        rocket.AmountOfPurchasedProducers++;
+        globalProduction.CurrentAmountOfCookies -= costOfRocket;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+};
+var purchasePlanetProducer = function () {
+    var costOfPlanet = currentCostOfProducer()[2];
+    if (globalProduction.CurrentAmountOfCookies >= costOfPlanet) {
+        planet.AmountOfPurchasedProducers++;
+        globalProduction.CurrentAmountOfCookies -= costOfPlanet;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+};
 var getReferencesToProducerInfoArray = function () {
     var producerInformationArray;
     var placeForNameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0];
@@ -165,10 +195,31 @@ var farmProductionPerSecond = function () {
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 };
+var factoryProductionPerSecond = function () {
+    var productioPerSecondnOfAllFactories = globalProductionPerSecondByAllProducers()[3];
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllFactories;
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+};
+var rocketProductionPerSecond = function () {
+    var productioPerSecondnOfAllRockets = globalProductionPerSecondByAllProducers()[4];
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllRockets;
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+};
+var planetProductionPerSecond = function () {
+    var productioPerSecondnOfAllPlanets = globalProductionPerSecondByAllProducers()[5];
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllPlanets;
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+};
 var getProductionOfEachProducerPerSecond = function () {
     cursorProductionPerSecond();
     grandmaProductionPerSecond();
     farmProductionPerSecond();
+    factoryProductionPerSecond();
+    rocketProductionPerSecond();
+    planetProductionPerSecond();
 };
 var refreshToShowNewProduction = function () {
     setInterval(getProductionOfEachProducerPerSecond, 1000);

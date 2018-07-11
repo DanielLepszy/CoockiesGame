@@ -82,7 +82,43 @@ const purchaseFarmaProducer = (): void => {
         showAmountPurchasedProducers();
     }
 }
+const purchaseFactoryProducer = (): void => {
 
+    let costOfFactory = currentCostOfProducer()[2];
+
+    if (globalProduction.CurrentAmountOfCookies >= costOfFactory) {
+        factory.AmountOfPurchasedProducers++
+        globalProduction.CurrentAmountOfCookies -= costOfFactory;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+}
+
+const purchaseRocketProducer = (): void => {
+
+    let costOfRocket = currentCostOfProducer()[2];
+
+    if (globalProduction.CurrentAmountOfCookies >= costOfRocket) {
+        rocket.AmountOfPurchasedProducers++
+        globalProduction.CurrentAmountOfCookies -= costOfRocket;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+}
+const purchasePlanetProducer = (): void => {
+
+    let costOfPlanet = currentCostOfProducer()[2];
+
+    if (globalProduction.CurrentAmountOfCookies >= costOfPlanet) {
+        planet.AmountOfPurchasedProducers++
+        globalProduction.CurrentAmountOfCookies -= costOfPlanet;
+        ifProducerIsAvaibilityToBuy();
+        showGlobalProductionPerSecondOnTopPage();
+        showAmountPurchasedProducers();
+    }
+}
 const getReferencesToProducerInfoArray = (): Array<any> => {
 
     let producerInformationArray: Array<any>;
@@ -174,12 +210,31 @@ const farmProductionPerSecond = (): void => {
     showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
-
+const factoryProductionPerSecond = (): void => {
+    let productioPerSecondnOfAllFactories = globalProductionPerSecondByAllProducers()[3]
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllFactories
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+}
+const rocketProductionPerSecond = (): void => {
+    let productioPerSecondnOfAllRockets = globalProductionPerSecondByAllProducers()[4]
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllRockets
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+}
+const planetProductionPerSecond = (): void => {
+    let productioPerSecondnOfAllPlanets = globalProductionPerSecondByAllProducers()[5]
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllPlanets
+    showGlobalProductionOnTopPage();
+    ifProducerIsAvaibilityToBuy();
+}
 const getProductionOfEachProducerPerSecond = (): void => {
     cursorProductionPerSecond()
     grandmaProductionPerSecond()
     farmProductionPerSecond()
-
+    factoryProductionPerSecond()
+    rocketProductionPerSecond()
+    planetProductionPerSecond()
 }
 
 const refreshToShowNewProduction = (): void => {
