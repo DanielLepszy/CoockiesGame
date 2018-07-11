@@ -48,20 +48,20 @@ var planet = new Producer("Planet", 100, 6000);
 var globalProduction = new GlobalProductionOfCoockies();
 var addCoockieOnClick = function () {
     globalProduction.CurrentAmountOfCookies++;
-    showGlobalProduction();
+    showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 };
 var purchaseCursorProducer = function () {
-    var increaseCostOfCursors = (cursor.AmountOfPurchasedProducers * cursor.CostOfSingleProducer) * 0.33;
-    if (globalProduction.CurrentAmountOfCookies >= (10 + increaseCostOfCursors)) {
+    var costOfCursor = currentCostOfProducer()[0];
+    if (globalProduction.CurrentAmountOfCookies >= costOfCursor) {
         cursor.AmountOfPurchasedProducers++;
-        globalProduction.CurrentAmountOfCookies -= 10;
+        globalProduction.CurrentAmountOfCookies -= costOfCursor;
         ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecond();
+        showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
     }
 };
-var referencesToProducerInfoArray = function () {
+var getReferencesToProducerInfoArray = function () {
     var producerInformationArray;
     var placeForNameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0];
     var placeForProductionOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[1];
@@ -95,26 +95,46 @@ var getReferencesToParagraph = function () {
         ];
     return arrayOfReferencesParagraph;
 };
-var showGlobalProduction = function () {
+var showGlobalProductionOnTopPage = function () {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString();
 };
-var showGlobalProductionPerSecond = function () {
+var showGlobalProductionPerSecondOnTopPage = function () {
     globalProduction.GlobalProductionPerSecond = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString();
 };
 var cursorProductionPerSecond = function () {
-    var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
-    globalProduction.CurrentAmountOfCookies += productionOfAllCursor;
-    showGlobalProduction();
+    var productioPerSecondnOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllCursor;
+    showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 };
 var productionOfEachProducerPerSecond = function () {
     setInterval(cursorProductionPerSecond, 1000);
 };
+var getCurrentProductionPerSecondOfProducer = function () {
+    var producersProductionPerSecond;
+    var productionPerSecondOfAllCursors = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
+    var productionPerSecondOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond);
+    var productionPerSecondOfAllFarms = (farm.AmountOfPurchasedProducers * farm.CoockiesPerSecond);
+    var productionPerSecondOfAllFactories = (factory.AmountOfPurchasedProducers * factory.CoockiesPerSecond);
+    var productionPerSecondOfAllRockets = (rocket.AmountOfPurchasedProducers * rocket.CoockiesPerSecond);
+    var productionPerSecondOfAllPlanets = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond);
+    producersProductionPerSecond =
+        [
+            productionPerSecondOfAllCursors,
+            productionPerSecondOfAllGrandmas,
+            productionPerSecondOfAllFarms,
+            productionPerSecondOfAllFactories,
+            productionPerSecondOfAllRockets,
+            productionPerSecondOfAllPlanets
+        ];
+    return producersProductionPerSecond;
+};
 var showCursorInfo = function () {
-    var producerInformationArray = referencesToProducerInfoArray();
-    var productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);
-    producerInformationArray[0].innerHTML = cursor.NameOfProducer;
+    var producerInformationArray = getReferencesToProducerInfoArray();
+    var productionOfAllCursor = getCurrentProductionPerSecondOfProducer()[0];
+    var currentProducerCost = currentCostOfProducer()[0];
+    producerInformationArray[0].innerHTML = "Current cost of " + cursor.NameOfProducer + ": " + currentProducerCost;
     producerInformationArray[1].innerHTML = "Each " + cursor.NameOfProducer + " produce: " + cursor.CoockiesPerSecond.toString() + " cookies per sec";
     producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString();
@@ -128,43 +148,14 @@ var showAmountPurchasedProducers = function () {
     arrayOfReferencesParagraph[4].innerHTML = rocket.AmountOfPurchasedProducers.toString();
     arrayOfReferencesParagraph[5].innerHTML = planet.AmountOfPurchasedProducers.toString();
 };
-var ifProducerIsAvaibilityToBuy = function () {
-    possibilityToBuyProducer();
-    impossibilityToBuyProducer();
-};
-var possibilityToBuyProducer = function () {
-    var AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
-    var singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img");
-    var increasdCostOfProducerArray = countCostOfProducer();
-    if (AmountOfAllCookies >= (10 + increasdCostOfProducerArray[0])) {
-        singleImageProducer[0].style.filter = "brightness(100%)";
-        singleImageProducer[0].style.cursor = "pointer";
-    }
-    else if (AmountOfAllCookies >= (100 + increasdCostOfProducerArray[1])) {
-        singleImageProducer[1].style.filter = "brightness(100%)";
-        singleImageProducer[1].style.cursor = "pointer";
-    }
-    else if (AmountOfAllCookies >= (1000 + increasdCostOfProducerArray[2])) {
-        singleImageProducer[2].style.filter = "brightness(100%)";
-        singleImageProducer[2].style.cursor = "pointer";
-    }
-    else if (AmountOfAllCookies >= (10000 + increasdCostOfProducerArray[3])) {
-        singleImageProducer[3].style.filter = "brightness(100%)";
-        singleImageProducer[3].style.cursor = "pointer";
-    }
-    else if (AmountOfAllCookies >= (100000 + increasdCostOfProducerArray[4])) {
-        singleImageProducer[4].style.filter = "brightness(100%)";
-        singleImageProducer[4].style.cursor = "pointer";
-    }
-};
-var countCostOfProducer = function () {
+var currentCostOfProducer = function () {
     var IncreasdCostOfProducerArray;
-    var increaseCostOfCursors = (cursor.AmountOfPurchasedProducers * cursor.CostOfSingleProducer) * 0.33;
-    var increaseCostOfGrandma = (grandma.AmountOfPurchasedProducers * grandma.CostOfSingleProducer) * 0.33;
-    var increaseCostOfFarm = (farm.AmountOfPurchasedProducers * farm.CostOfSingleProducer) * 0.33;
-    var increaseCostOfFactory = (factory.AmountOfPurchasedProducers * factory.CostOfSingleProducer) * 0.33;
-    var increaseCostOfRocket = (rocket.AmountOfPurchasedProducers * rocket.CostOfSingleProducer) * 0.33;
-    var increaseCostOfPlanet = (planet.AmountOfPurchasedProducers * planet.CostOfSingleProducer) * 0.33;
+    var increaseCostOfCursors = cursor.CostOfSingleProducer + (cursor.AmountOfPurchasedProducers * cursor.CostOfSingleProducer) * 0.33;
+    var increaseCostOfGrandma = grandma.CostOfSingleProducer + (grandma.AmountOfPurchasedProducers * grandma.CostOfSingleProducer) * 0.33;
+    var increaseCostOfFarm = farm.CostOfSingleProducer + (farm.AmountOfPurchasedProducers * farm.CostOfSingleProducer) * 0.33;
+    var increaseCostOfFactory = factory.CostOfSingleProducer + (factory.AmountOfPurchasedProducers * factory.CostOfSingleProducer) * 0.33;
+    var increaseCostOfRocket = rocket.CostOfSingleProducer + (rocket.AmountOfPurchasedProducers * rocket.CostOfSingleProducer) * 0.33;
+    var increaseCostOfPlanet = planet.CostOfSingleProducer + (planet.AmountOfPurchasedProducers * planet.CostOfSingleProducer) * 0.33;
     IncreasdCostOfProducerArray =
         [
             increaseCostOfCursors,
@@ -176,28 +167,29 @@ var countCostOfProducer = function () {
         ];
     return IncreasdCostOfProducerArray;
 };
+var ifProducerIsAvaibilityToBuy = function () {
+    possibilityToBuyProducer();
+    impossibilityToBuyProducer();
+};
+var possibilityToBuyProducer = function () {
+    var AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
+    var singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img");
+    var costOfProducerArray = currentCostOfProducer();
+    for (var i = 0; i < costOfProducerArray.length; i++) {
+        if (AmountOfAllCookies >= costOfProducerArray[i]) {
+            singleImageProducer[i].style.filter = "brightness(100%)";
+            singleImageProducer[i].style.cursor = "pointer";
+        }
+    }
+};
 var impossibilityToBuyProducer = function () {
     var AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     var singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img");
-    var increasdCostOfProducerArray = countCostOfProducer();
-    if (AmountOfAllCookies < (10 + increasdCostOfProducerArray[0])) {
-        singleImageProducer[0].style.filter = "brightness(15%)";
-        singleImageProducer[0].style.cursor = "context-menu";
-    }
-    else if (AmountOfAllCookies < (100 + increasdCostOfProducerArray[1])) {
-        singleImageProducer[1].style.filter = "brightness(15%)";
-        singleImageProducer[1].style.cursor = "context-menu";
-    }
-    else if (AmountOfAllCookies < (1000 + increasdCostOfProducerArray[2])) {
-        singleImageProducer[2].style.filter = "brightness(15%)";
-        singleImageProducer[2].style.cursor = "context-menu";
-    }
-    else if (AmountOfAllCookies < (10000 + increasdCostOfProducerArray[3])) {
-        singleImageProducer[3].style.filter = "brightness(15%)";
-        singleImageProducer[3].style.cursor = "context-menu";
-    }
-    else if (AmountOfAllCookies < (100000 + increasdCostOfProducerArray[4])) {
-        singleImageProducer[4].style.filter = "brightness(15%)";
-        singleImageProducer[4].style.cursor = "context-menu";
+    var costOfProducerArray = currentCostOfProducer();
+    for (var i = 0; i < costOfProducerArray.length; i++) {
+        if (AmountOfAllCookies < costOfProducerArray[i]) {
+            singleImageProducer[i].style.filter = "brightness(15%)";
+            singleImageProducer[i].style.cursor = "context-menu";
+        }
     }
 };

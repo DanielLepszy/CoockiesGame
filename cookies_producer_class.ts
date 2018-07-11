@@ -39,31 +39,31 @@ let globalProduction = new GlobalProductionOfCoockies();
 
 const addCoockieOnClick = (): void => {
     globalProduction.CurrentAmountOfCookies++;
-    showGlobalProduction();
+    showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
 
 const purchaseCursorProducer = (): void => {
-   
-    let increaseCostOfCursors =  (cursor.AmountOfPurchasedProducers* cursor.CostOfSingleProducer)*0.33
-   
-    if (globalProduction.CurrentAmountOfCookies >= (10+increaseCostOfCursors)) {
+
+    let costOfCursor = currentCostOfProducer()[0];
+    
+    if (globalProduction.CurrentAmountOfCookies >= costOfCursor) {
         cursor.AmountOfPurchasedProducers++
-        globalProduction.CurrentAmountOfCookies -= 10;
+        globalProduction.CurrentAmountOfCookies -= costOfCursor;
         ifProducerIsAvaibilityToBuy();
-        showGlobalProductionPerSecond();
+        showGlobalProductionPerSecondOnTopPage();
         showAmountPurchasedProducers();
     }
 }
 
-const referencesToProducerInfoArray = (): Array<any> => {
+const getReferencesToProducerInfoArray = (): Array<any> => {
+
     let producerInformationArray: Array<any>;
 
     let placeForNameOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[0]
     let placeForProductionOfProducer = document.getElementById("producerInfo").getElementsByTagName("p")[1]
     let placeForProductionOfAllProducers = document.getElementById("producerInfo").getElementsByTagName("p")[2]
     let placeForAmountOfAllProducers = document.getElementById("producerInfo").getElementsByTagName("p")[3]
-
 
     producerInformationArray =
         [
@@ -95,37 +95,59 @@ const getReferencesToParagraph = (): Array<any> => {
         ]
     return arrayOfReferencesParagraph
 }
-const showGlobalProduction = (): void => {
+const showGlobalProductionOnTopPage = (): void => {
     document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
 }
-const showGlobalProductionPerSecond = (): void => {
+const showGlobalProductionPerSecondOnTopPage = (): void => {
     globalProduction.GlobalProductionPerSecond = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
     document.getElementById("globalProduction").getElementsByTagName("p")[0].innerHTML = "per second: " + globalProduction.GlobalProductionPerSecond.toString()
 }
 const cursorProductionPerSecond = (): void => {
-    let productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
-    globalProduction.CurrentAmountOfCookies += productionOfAllCursor
-    showGlobalProduction();
+    let productioPerSecondnOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    globalProduction.CurrentAmountOfCookies += productioPerSecondnOfAllCursor
+    showGlobalProductionOnTopPage();
     ifProducerIsAvaibilityToBuy();
 }
 
 
-const productionOfEachProducerPerSecond = () => {
+const productionOfEachProducerPerSecond = (): void => {
     setInterval(cursorProductionPerSecond, 1000);
 }
+const getCurrentProductionPerSecondOfProducer = ():Array<number> =>
+{
+    let producersProductionPerSecond:Array<number>
 
+    let productionPerSecondOfAllCursors = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    let productionPerSecondOfAllGrandmas = (grandma.AmountOfPurchasedProducers * grandma.CoockiesPerSecond)
+    let productionPerSecondOfAllFarms = (farm.AmountOfPurchasedProducers * farm.CoockiesPerSecond)
+    let productionPerSecondOfAllFactories = (factory.AmountOfPurchasedProducers * factory.CoockiesPerSecond)
+    let productionPerSecondOfAllRockets = (rocket.AmountOfPurchasedProducers * rocket.CoockiesPerSecond)
+    let productionPerSecondOfAllPlanets = (planet.AmountOfPurchasedProducers * planet.CoockiesPerSecond)
 
+    producersProductionPerSecond =
+    [
+        productionPerSecondOfAllCursors,
+        productionPerSecondOfAllGrandmas,
+        productionPerSecondOfAllFarms,
+        productionPerSecondOfAllFactories,
+        productionPerSecondOfAllRockets,
+        productionPerSecondOfAllPlanets
+    ]
+
+    return producersProductionPerSecond
+}
 const showCursorInfo = (): void => {
-    let producerInformationArray = referencesToProducerInfoArray();
-    let productionOfAllCursor = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond)
+    let producerInformationArray = getReferencesToProducerInfoArray();
+    let productionOfAllCursor = getCurrentProductionPerSecondOfProducer()[0]
+    let currentProducerCost = currentCostOfProducer()[0]
 
-    producerInformationArray[0].innerHTML = cursor.NameOfProducer
+    producerInformationArray[0].innerHTML = "Current cost of " + cursor.NameOfProducer + ": " + currentProducerCost
     producerInformationArray[1].innerHTML = "Each " + cursor.NameOfProducer + " produce: " + cursor.CoockiesPerSecond.toString() + " cookies per sec";
     producerInformationArray[2].innerHTML = productionOfAllCursor.toString() + " Cursors produce " + productionOfAllCursor + " cookies per second";
     producerInformationArray[3].innerHTML = "Amount producer: " + cursor.AmountOfPurchasedProducers.toString()
 
 }
-const showAmountPurchasedProducers = () => {
+const showAmountPurchasedProducers = (): void => {
     let arrayOfReferencesParagraph = getReferencesToParagraph();
 
     arrayOfReferencesParagraph[0].innerHTML = cursor.AmountOfPurchasedProducers.toString()
@@ -136,85 +158,55 @@ const showAmountPurchasedProducers = () => {
     arrayOfReferencesParagraph[5].innerHTML = planet.AmountOfPurchasedProducers.toString()
 
 }
+const currentCostOfProducer = (): Array<number> => {
+    let IncreasdCostOfProducerArray: Array<number>;
+    let increaseCostOfCursors = cursor.CostOfSingleProducer + (cursor.AmountOfPurchasedProducers * cursor.CostOfSingleProducer) * 0.33
+    let increaseCostOfGrandma = grandma.CostOfSingleProducer + (grandma.AmountOfPurchasedProducers * grandma.CostOfSingleProducer) * 0.33
+    let increaseCostOfFarm = farm.CostOfSingleProducer + (farm.AmountOfPurchasedProducers * farm.CostOfSingleProducer) * 0.33
+    let increaseCostOfFactory = factory.CostOfSingleProducer + (factory.AmountOfPurchasedProducers * factory.CostOfSingleProducer) * 0.33
+    let increaseCostOfRocket = rocket.CostOfSingleProducer + (rocket.AmountOfPurchasedProducers * rocket.CostOfSingleProducer) * 0.33
+    let increaseCostOfPlanet = planet.CostOfSingleProducer + (planet.AmountOfPurchasedProducers * planet.CostOfSingleProducer) * 0.33
+
+    IncreasdCostOfProducerArray =
+        [
+            increaseCostOfCursors,
+            increaseCostOfGrandma,
+            increaseCostOfFarm,
+            increaseCostOfFactory,
+            increaseCostOfRocket,
+            increaseCostOfPlanet
+        ]
+
+    return IncreasdCostOfProducerArray
+}
 const ifProducerIsAvaibilityToBuy = (): void => {
     possibilityToBuyProducer();
     impossibilityToBuyProducer();
 }
-
 const possibilityToBuyProducer = (): void => {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
-    let increasdCostOfProducerArray = countCostOfProducer();
-    
-    if (AmountOfAllCookies >= (10+increasdCostOfProducerArray[0])) {
-        singleImageProducer[0].style.filter = "brightness(100%)"
-        singleImageProducer[0].style.cursor = "pointer"
-    }
-    else if (AmountOfAllCookies >= (100+increasdCostOfProducerArray[1])) {
-        singleImageProducer[1].style.filter = "brightness(100%)"
-        singleImageProducer[1].style.cursor = "pointer"
-    }
-    else if (AmountOfAllCookies >= (1000+increasdCostOfProducerArray[2])) {
-        singleImageProducer[2].style.filter = "brightness(100%)"
-        singleImageProducer[2].style.cursor = "pointer"
-    }
-    else if (AmountOfAllCookies >= (10000+increasdCostOfProducerArray[3])) {
-        singleImageProducer[3].style.filter = "brightness(100%)"
-        singleImageProducer[3].style.cursor = "pointer"
-    }
-    else if (AmountOfAllCookies >= (100000+increasdCostOfProducerArray[4])) {
-        singleImageProducer[4].style.filter = "brightness(100%)"
-        singleImageProducer[4].style.cursor = "pointer"
-    }
+    let costOfProducerArray = currentCostOfProducer();
 
-}
-const countCostOfProducer = ():Array<number> =>
-{
-    let IncreasdCostOfProducerArray: Array<number>;
-    let increaseCostOfCursors =  (cursor.AmountOfPurchasedProducers* cursor.CostOfSingleProducer)*0.33
-    let increaseCostOfGrandma =  (grandma.AmountOfPurchasedProducers* grandma.CostOfSingleProducer)*0.33
-    let increaseCostOfFarm =  (farm.AmountOfPurchasedProducers* farm.CostOfSingleProducer)*0.33
-    let increaseCostOfFactory =  (factory.AmountOfPurchasedProducers* factory.CostOfSingleProducer)*0.33
-    let increaseCostOfRocket =  (rocket.AmountOfPurchasedProducers* rocket.CostOfSingleProducer)*0.33
-    let increaseCostOfPlanet =  (planet.AmountOfPurchasedProducers* planet.CostOfSingleProducer)*0.33
-    
-    IncreasdCostOfProducerArray =
-    [
-        increaseCostOfCursors,
-        increaseCostOfGrandma,
-        increaseCostOfFarm,
-        increaseCostOfFactory,
-        increaseCostOfRocket,
-        increaseCostOfPlanet
-    ]
-
-    return IncreasdCostOfProducerArray
+    for(var i:number=0;i<costOfProducerArray.length;i++)
+    {
+        if (AmountOfAllCookies >= costOfProducerArray[i]) {
+            singleImageProducer[i].style.filter = "brightness(100%)"
+            singleImageProducer[i].style.cursor = "pointer"
+        }
+    }
 }
 const impossibilityToBuyProducer = () => {
     let AmountOfAllCookies = globalProduction.CurrentAmountOfCookies;
     let singleImageProducer = document.getElementById("producersOfCookies").getElementsByTagName("img")
-    let increasdCostOfProducerArray = countCostOfProducer();
-    if (AmountOfAllCookies < (10+increasdCostOfProducerArray[0])) {
-        singleImageProducer[0].style.filter = "brightness(15%)"
-        singleImageProducer[0].style.cursor = "context-menu"
+    let costOfProducerArray = currentCostOfProducer();
+    for(var i:number=0;i<costOfProducerArray.length;i++)
+    {
+        if (AmountOfAllCookies < costOfProducerArray[i]) {
+            singleImageProducer[i].style.filter = "brightness(15%)"
+            singleImageProducer[i].style.cursor = "context-menu"
+        }
     }
-    else if (AmountOfAllCookies < (100+increasdCostOfProducerArray[1])) {
-        singleImageProducer[1].style.filter = "brightness(15%)"
-        singleImageProducer[1].style.cursor = "context-menu"
-    }
-    else if (AmountOfAllCookies < (1000+increasdCostOfProducerArray[2])) {
-        singleImageProducer[2].style.filter = "brightness(15%)"
-        singleImageProducer[2].style.cursor = "context-menu"
-    }
-    else if (AmountOfAllCookies < (10000+increasdCostOfProducerArray[3])) {
-        singleImageProducer[3].style.filter = "brightness(15%)"
-        singleImageProducer[3].style.cursor = "context-menu"
-    }
-    else if (AmountOfAllCookies < (100000+increasdCostOfProducerArray[4])) {
-        singleImageProducer[4].style.filter = "brightness(15%)"
-        singleImageProducer[4].style.cursor = "context-menu"
-    }
-
 }
 
 
