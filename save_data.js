@@ -17,17 +17,15 @@ $(document).ready(function () {
             });
         }
     }
-    //Success
     request.onsuccess = function (e) {
         console.log("Database is open");
         db = e.target.result;
     }
 });
-//Add Data_Coockies
+
 function addCoockiesData() {
 
     let amountOfCookies = $('#amountOfCookies').text();
-
     let amounfOfProducer = getReferencesToParagraph();
 
     let amountOfCursors = amounfOfProducer[0].textContent
@@ -38,8 +36,6 @@ function addCoockiesData() {
     let amountOfPlanets = amounfOfProducer[5].textContent
 
     var transaction = db.transaction(["cookies"], "readwrite");
-
-    //Ask for ObjectFor
     var store = transaction.objectStore("cookies");
 
     
@@ -57,24 +53,23 @@ function addCoockiesData() {
     })
    
     request.onsuccess = function (e) {
-        window.location.href = "index.html"
+        window.location.href = "index.html" // ???????????????
     }
     // Error
     request.onerror = function (e) {
-        console.log("Data was not added")
+        console.log("Data was not added") // ??????????????/
     }
 }
-//const saveGame = () => {
+
     $(document).ready(function () {
         $(window).bind("beforeunload", function () {
             addCoockiesData();
         });
     });
-//}
+
 const showSavedValue =(array) =>
 {
         let amountOfCookies = $('#amountOfCookies');
-    
         let amounfOfProducer = getReferencesToParagraph();
     
         let amountOfCursors = amounfOfProducer[0]
@@ -85,7 +80,6 @@ const showSavedValue =(array) =>
         let amountOfPlanets = amounfOfProducer[5]
     
         amountOfCookies.html(array[0]);
-
         amountOfCursors.innerHTML = array[1];
         amountOfGrandmas.innerHTML= array[2];
         amountOfFarms.innerHTML= array[3];
@@ -93,15 +87,35 @@ const showSavedValue =(array) =>
         amountOfRockets.innerHTML= array[5];
         amountOfPlanets.innerHTML= array[6];
 }
+const objectsOfProducersAndProduction = () =>
+{
+    let arrayOfObjects =
+    [
+        globalProduction.CurrentAmountOfCookies,
+        cursor.AmountOfPurchasedProducers,
+        grandma.AmountOfPurchasedProducers,
+        farm.AmountOfPurchasedProducers,
+        factory.AmountOfPurchasedProducers,
+        rocket.AmountOfPurchasedProducers,
+        planet.AmountOfPurchasedProducers
+    ]
+    return arrayOfObjects
+}
 const setValueToTheProducers =(array) =>
 {
-    globalProduction.CurrentAmountOfCookies+=parseInt(array[0])
-    cursor.AmountOfPurchasedProducers+=parseInt(array[1])
-    grandma.AmountOfPurchasedProducers+=parseInt(array[2])
-    farm.AmountOfPurchasedProducers+=parseInt(array[3])
-    factory.AmountOfPurchasedProducers+=parseInt(array[4])
-    rocket.AmountOfPurchasedProducers+=parseInt(array[5])
-    planet.AmountOfPurchasedProducers+=parseInt(array[1])
+    let arrayOfObiects = objectsOfProducersAndProduction()
+
+    for(var i=0;i<arrayOfObiects.length;i++)
+    {
+        arrayOfObiects[i] +=parseInt(array[i])
+    }
+    // globalProduction.CurrentAmountOfCookies+=parseInt(array[0])
+    // cursor.AmountOfPurchasedProducers+=parseInt(array[1])
+    // grandma.AmountOfPurchasedProducers+=parseInt(array[2])
+    // farm.AmountOfPurchasedProducers+=parseInt(array[3])
+    // factory.AmountOfPurchasedProducers+=parseInt(array[4])
+    // rocket.AmountOfPurchasedProducers+=parseInt(array[5])
+    // planet.AmountOfPurchasedProducers+=parseInt(array[1])
 }
 
 const loadGame = () => {
