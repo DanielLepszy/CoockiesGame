@@ -26,30 +26,23 @@ $(document).ready(function () {
 //Add Data_Coockies
 function addCoockiesData() {
 
-    var amountOfCookies = $('#amountOfCookies').text();
+    let amountOfCookies = $('#amountOfCookies').text();
 
-    let amountOfCursors = document.getElementById("producersOfCookies").getElementsByTagName("div")[0].getElementsByTagName("p")[1].textContent
-    let amountOfGrandmas = document.getElementById("producersOfCookies").getElementsByTagName("div")[1].getElementsByTagName("p")[1].textContent
-    let amountOfFactories = document.getElementById("producersOfCookies").getElementsByTagName("div")[2].getElementsByTagName("p")[1].textContent
-    let amountOfFarms = document.getElementById("producersOfCookies").getElementsByTagName("div")[3].getElementsByTagName("p")[1].textContent
-    let amountOfRockets = document.getElementById("producersOfCookies").getElementsByTagName("div")[4].getElementsByTagName("p")[1].textContent
-    let amountOfPlanets = document.getElementById("producersOfCookies").getElementsByTagName("div")[5].getElementsByTagName("p")[1].textContent
+    let amounfOfProducer = getReferencesToParagraph();
+
+    let amountOfCursors = amounfOfProducer[0].textContent
+    let amountOfGrandmas = amounfOfProducer[1].textContent
+    let amountOfFactories = amounfOfProducer[2].textContent
+    let amountOfFarms = amounfOfProducer[3].textContent
+    let amountOfRockets = amounfOfProducer[4].textContent
+    let amountOfPlanets = amounfOfProducer[5].textContent
 
     var transaction = db.transaction(["cookies"], "readwrite");
 
     //Ask for ObjectFor
     var store = transaction.objectStore("cookies");
 
-    //Define Customer
-    // var data = {
-    //     Purchased_Coockies: amountOfCookies,
-    //     Cursors_Amount:amountOfCursors,
-    //     Grandma_Amount:amountOfGrandmas,
-    //     Farms_Amount:amountOfFarms,
-    //     Factories_Amount:amountOfFactories,
-    //     Rocket__Amount:amountOfRockets,
-    //     Planet_Amount:amountOfPlanets
-    // }
+    
     var request = store.put({
         id: 1,
         amount: {
@@ -62,9 +55,7 @@ function addCoockiesData() {
             planets: amountOfPlanets
         }
     })
-    //Perform the Add
-    //var request = store.add(data);
-    //Success
+   
     request.onsuccess = function (e) {
         window.location.href = "index.html"
     }
@@ -73,16 +64,40 @@ function addCoockiesData() {
         console.log("Data was not added")
     }
 }
-const saveGame = () => {
+//const saveGame = () => {
     $(document).ready(function () {
         $(window).bind("beforeunload", function () {
             addCoockiesData();
         });
     });
-}
-const loadGame = () => {
-    var request = indexedDB.open('cookies_data', 1)
+//}
+const setValueFromData =(array) =>
+{
+        let amountOfCookies = $('#amountOfCookies');
+    
+        let amounfOfProducer = getReferencesToParagraph();
+    
+        let amountOfCursors = amounfOfProducer[0]
+        let amountOfGrandmas = amounfOfProducer[1]
+        let amountOfFarms = amounfOfProducer[2]
+        let amountOfFactories = amounfOfProducer[3]
+        let amountOfRockets = amounfOfProducer[4]
+        let amountOfPlanets = amounfOfProducer[5]
+    
+        amountOfCookies.html(array[0]);
 
+        amountOfCursors.innerHTML = array[0];
+        amountOfGrandmas.innerHTML= array[2];
+        amountOfFarms.innerHTML= array[3];
+        amountOfFactories.innerHTML= array[4];
+        amountOfRockets.innerHTML= array[5];
+        amountOfPlanets.innerHTML= array[6];
+}
+
+const loadGame = () => {
+    
+    var request = indexedDB.open('cookies_data', 1)
+    let dataArray = [];
     request.onsuccess = function () {
         var db = request.result;
         var transaction = db.transaction(["cookies"], "readonly");
@@ -90,11 +105,21 @@ const loadGame = () => {
         //Ask for ObjectStore
         var store = transaction.objectStore("cookies");
         var index = store.index('DataIndex')
-
+        
         var getData = store.get(1);
         getData.onsuccess = function () {
-            console.log(getData.result.amount.cookies); // => "Johns"
+          
+            dataArray.push(
+                getData.result.amount.cookies,
+                getData.result.amount.cursors,
+                getData.result.amount.grandmas,
+                getData.result.amount.farms,
+                getData.result.amount.factories,
+                getData.result.amount.rockets,
+                getData.result.amount.planets
+            )
+            setValueFromData(dataArray);
+            
         };
     }
-
 }

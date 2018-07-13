@@ -245,6 +245,7 @@ const getProductionOfEachProducerPerSecond = (): void => {
 }
 
 const refreshToShowNewProduction = (): void => {
+    
     setInterval(getProductionOfEachProducerPerSecond, 1000);
 }
 const getCurrentProductionPerSecondOfProducer = (): Array<number> => {
