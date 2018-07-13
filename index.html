@@ -9,13 +9,15 @@
     <link rel="stylesheet" type="text/css" media="screen" href="layout_index_css.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
+
 </head>
 
-<body onload="refreshToShowNewProduction()">
+<body onload="refreshToShowNewProduction()" onUnload="addCoockiesData()">
     <div class="container-fluid">
         <div class="row justify-content-center" id="globalProduction" onmouseover="cleanProducerInfoOnBottomPage()">
             <div class="col-sm-offset-12">
-                <h3>Cookies: </h3>
+                <h2> Cookies:</h2>
+                <h3 id="amountOfCookies"> </h3>
                 <p>per second: </p>
             </div>
         </div>
@@ -74,6 +76,9 @@
 <script>
     var exports = {};
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="cookies_producer_class.js"></script>
+<script src="save_data.js"></script>
 
 </html>

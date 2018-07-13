@@ -154,7 +154,7 @@ var getReferencesToParagraph = function () {
     return arrayOfReferencesParagraph;
 };
 var showGlobalProductionOnTopPage = function () {
-    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString();
+    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = globalProduction.CurrentAmountOfCookies.toString();
 };
 var globalProductionPerSecondByAllProducers = function () {
     var globalProductionPerSec;

@@ -37,6 +37,7 @@ let planet = new Producer("Planet", 100, 1000)
 
 let globalProduction = new GlobalProductionOfCoockies()
 
+
 const addCoockieOnClick = (): void => {
     globalProduction.CurrentAmountOfCookies++;
     showGlobalProductionOnTopPage()
@@ -165,7 +166,7 @@ const getReferencesToParagraph = (): Array<any> => {
     return arrayOfReferencesParagraph
 }
 const showGlobalProductionOnTopPage = (): void => {
-    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = "Cookies: " + globalProduction.CurrentAmountOfCookies.toString()
+    document.getElementById("globalProduction").getElementsByTagName("h3")[0].innerHTML = globalProduction.CurrentAmountOfCookies.toString()
 }
 const globalProductionPerSecondByAllProducers = (): Array<number> => {
 
