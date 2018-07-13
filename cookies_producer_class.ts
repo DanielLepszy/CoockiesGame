@@ -1,4 +1,4 @@
-export { }
+export {}
 abstract class ProductionOfCoockiesByProducer {
     CoockiesPerSecond: number;
     CostOfSingleProducer: number;
@@ -244,10 +244,10 @@ const getProductionOfEachProducerPerSecond = (): void => {
     planetProductionPerSecond()
 }
 
-const refreshToShowNewProduction = (): void => {
+// const refreshToShowNewProduction = (): void => {
     
-    setInterval(getProductionOfEachProducerPerSecond, 1000);
-}
+//     setInterval(getProductionOfEachProducerPerSecond, 1000);
+// }
 const getCurrentProductionPerSecondOfProducer = (): Array<number> => {
     let producersProductionPerSecond: Array<number>
 
@@ -400,5 +400,4 @@ const impossibilityToBuyProducer = () => {
         }
     }
 }
-
 

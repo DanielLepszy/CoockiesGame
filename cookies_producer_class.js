@@ -227,9 +227,9 @@ var getProductionOfEachProducerPerSecond = function () {
     rocketProductionPerSecond();
     planetProductionPerSecond();
 };
-var refreshToShowNewProduction = function () {
-    setInterval(getProductionOfEachProducerPerSecond, 1000);
-};
+// const refreshToShowNewProduction = (): void => {
+//     setInterval(getProductionOfEachProducerPerSecond, 1000);
+// }
 var getCurrentProductionPerSecondOfProducer = function () {
     var producersProductionPerSecond;
     var productionPerSecondOfAllCursors = (cursor.AmountOfPurchasedProducers * cursor.CoockiesPerSecond);

@@ -71,7 +71,7 @@ function addCoockiesData() {
         });
     });
 //}
-const setValueFromData =(array) =>
+const showSavedValue =(array) =>
 {
         let amountOfCookies = $('#amountOfCookies');
     
@@ -86,12 +86,22 @@ const setValueFromData =(array) =>
     
         amountOfCookies.html(array[0]);
 
-        amountOfCursors.innerHTML = array[0];
+        amountOfCursors.innerHTML = array[1];
         amountOfGrandmas.innerHTML= array[2];
         amountOfFarms.innerHTML= array[3];
         amountOfFactories.innerHTML= array[4];
         amountOfRockets.innerHTML= array[5];
         amountOfPlanets.innerHTML= array[6];
+}
+const setValueToTheProducers =(array) =>
+{
+    globalProduction.CurrentAmountOfCookies+=parseInt(array[0])
+    cursor.AmountOfPurchasedProducers+=parseInt(array[1])
+    grandma.AmountOfPurchasedProducers+=parseInt(array[2])
+    farm.AmountOfPurchasedProducers+=parseInt(array[3])
+    factory.AmountOfPurchasedProducers+=parseInt(array[4])
+    rocket.AmountOfPurchasedProducers+=parseInt(array[5])
+    planet.AmountOfPurchasedProducers+=parseInt(array[1])
 }
 
 const loadGame = () => {
@@ -118,8 +128,14 @@ const loadGame = () => {
                 getData.result.amount.rockets,
                 getData.result.amount.planets
             )
-            setValueFromData(dataArray);
+          
+            showSavedValue(dataArray);
+            setValueToTheProducers(dataArray);
             
         };
     }
+}
+const refreshToShowNewProduction = () => {
+    loadGame();
+    setInterval(getProductionOfEachProducerPerSecond, 1000);
 }
